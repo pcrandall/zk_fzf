@@ -1,32 +1,46 @@
 <script>
-  import Counter from './lib/Counter.svelte'
+  import Counter from "./lib/Counter.svelte";
+  import { Fzf } from "fzf";
+  const list = [
+    "go",
+    "javascript",
+    "python",
+    "rust",
+    "swift",
+    "kotlin",
+    "elixir",
+    "java",
+    "lisp",
+    "v",
+    "zig",
+    "nim",
+    "rescript",
+    "d",
+    "haskell",
+  ];
 
-import { Fzf } from 'fzf'
-
-const list = ['go', 'javascript', 'python', 'rust',
-              'swift', 'kotlin', 'elixir', 'java',
-              'lisp', 'v', 'zig', 'nim', 'rescript',
-              'd', 'haskell']
-
-const fzf = new Fzf(list)
-
-const entries = fzf.find('li')
-const ranking = entries.map(entry => entry.item).join(', ')
-console.log(ranking) // Output: lisp, kotlin, elixir
-
+  const fzf = new Fzf(list);
+  const entries = fzf.find("li");
+  const ranking = entries.map((entry) => entry.item).join(", ");
+  console.log(ranking); // Output: lisp, kotlin, elixir
 </script>
 
 <main>
-  <h1>Hello world!</h1>
-
-  <input value={name}>
-
+  <h1>Zettelkasten!</h1>
+  <input
+    class="input is-large is-primary is-hovered"
+    value={name}
+    type="text"
+    placeholder="Search notes here..."
+  />
 </main>
 
 <style>
   :root {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-      Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+      Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    background-color: #eceff4;
+    width: 100%;
   }
 
   main {
@@ -35,9 +49,9 @@ console.log(ranking) // Output: lisp, kotlin, elixir
     margin: 0 auto;
   }
 
-  img {
-    height: 16rem;
-    width: 16rem;
+  input {
+    width: 92%;
+    text-align: center;
   }
 
   h1 {
@@ -50,18 +64,8 @@ console.log(ranking) // Output: lisp, kotlin, elixir
     max-width: 14rem;
   }
 
-  p {
-    max-width: 14rem;
-    margin: 1rem auto;
-    line-height: 1.35;
-  }
-
   @media (min-width: 480px) {
     h1 {
-      max-width: none;
-    }
-
-    p {
       max-width: none;
     }
   }
