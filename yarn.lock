@@ -10,6 +10,11 @@
     "estree-walker" "^2.0.1"
     "picomatch" "^2.2.2"
 
+"@sveltejs/svelte-virtual-list@^3.0.1":
+  "integrity" "sha512-aF9TptS7NKKS7/TqpsxQBSDJ9Q0XBYzBehCeIC5DzdMEgrJZpIYao9LRLnyyo6SVodpapm2B7FE/Lj+FSA5/SQ=="
+  "resolved" "https://registry.npmjs.org/@sveltejs/svelte-virtual-list/-/svelte-virtual-list-3.0.1.tgz"
+  "version" "3.0.1"
+
 "@sveltejs/vite-plugin-svelte@^1.0.0-next.11":
   "integrity" "sha512-8yGX7PxaqtvWw+GHiO2DV7lZ4M7DwIrFq+PgZGZ9X09PuoSeaWszm76GWQXJMKHoPPhdA9084662en9qbv4aRw=="
   "resolved" "https://registry.npmjs.org/@sveltejs/vite-plugin-svelte/-/vite-plugin-svelte-1.0.0-next.15.tgz"
@@ -89,6 +94,11 @@
   "integrity" "sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w=="
   "resolved" "https://registry.npmjs.org/ms/-/ms-2.1.2.tgz"
   "version" "2.1.2"
+
+"namey-mcnameface@^1.0.3":
+  "integrity" "sha1-hoWXOOPnDZWKIZaijglTDJS6iNA="
+  "resolved" "https://registry.npmjs.org/namey-mcnameface/-/namey-mcnameface-1.0.3.tgz"
+  "version" "1.0.3"
 
 "nanoid@^3.1.23":
   "integrity" "sha512-FiB0kzdP0FFVGDKlRLEQ1BgDzU87dy5NnzjeW9YZNt+/c3+q82EQDUwniSAUxp/F0gFNI1ZhKU1FqYsMuqZVnw=="

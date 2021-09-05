@@ -13,8 +13,10 @@
     "vite": "^2.4.4"
   },
   "dependencies": {
+    "@sveltejs/svelte-virtual-list": "^3.0.1",
     "bulma": "^0.9.3",
     "fzf": "^0.3.2",
+    "namey-mcnameface": "^1.0.3",
     "prettier-plugin-svelte": "^2.4.0"
   }
 }
