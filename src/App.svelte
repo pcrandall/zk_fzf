@@ -1,44 +1,48 @@
 <script>
+  // @ts-nocheck
+
   import { Fzf } from "fzf";
   import VirtualList from "./lib/VirtualList.svelte";
-  import items from "./lib/data.js";
   import ListItem from "./lib/ListItem.svelte";
-
-  /* import { colors } from "./data-store.js"; */
-  /* import Table from "./lib/Table.svelte"; */
-  /* import { beforeUpdate, afterUpdate } from "svelte"; */
+  import items from "./lib/data.js";
+  import { onMount } from "svelte";
+  import "fa-icons";
 
   let searchTerm = "";
+  let searchInput;
   let start;
   let end;
-  let zk_len;
+  onMount(() => searchInput.focus());
+
   $: filteredList = items.filter(
     (item) => item.name.indexOf(searchTerm) !== -1
   );
 
-
-  if(searchTerm === "") {
-    zk_len = 1000
-  }else{
-    zk_len = filteredList.length
-  }
+  $: zk_len = filteredList.length; // subscribe to filteredList
 
   console.log(items);
 
-  /* avatar: "https://images.pexels.com/photos/406014/pexels-photo-406014.jpeg?auto=compress&cs=tinysrgb&h=75"
+  /*
+    items here
+
     content: "ckrra qrh eteuqykbv ehtthdn rqa fdyvbru ropym qlf nurxqwudmtd amfvfes okdfhxfx oygmeuhgk bfbbeofhe ywxjm"
     key: "_0"
-    name: "funny-goat" */
+    name: "funny-goat"
 
-  /* console.trace(filteredList); */
+    console.trace(filteredList);
+
+  */
 
   const fzf = new Fzf(items, {
     // With selector you tell FZF where it can find
     // the string that you want to query on
     selector: (item) => item.content,
-    limit: 32,
     maxResultItems: 32,
   });
+
+  /**
+   * @param {{ key: string; target: { value: any; }; }} event
+   */
 
   function handleKeydown(event) {
     if (event.key === "Enter") {
@@ -60,17 +64,24 @@
 
 <main>
   <h1>Zettelkasten!</h1>
-  <input
-    class="input is-Medium is-primary is-hovered"
-    bind:value={searchTerm}
-    placeholder="Search notes here..."
-    on:keydown={handleKeydown}
-  />
-  <div class="cont">
+  <div class="field">
+    <p class="control has-icons-left">
+      <input
+        class="input searchbar is-Medium is-primary is-hovered has-text-weight-normal"
+        bind:value={searchTerm}
+        bind:this={searchInput}
+        on:keydown={handleKeydown}
+        placeholder="Search notes here..."
+        type="text"
+      />
+    </p>
+  </div>
+
+  <div class="_container">
     <VirtualList bind:items={filteredList} bind:start bind:end let:item>
       <ListItem {...item} />
     </VirtualList>
-    <p>Items {start}-{end} of {items.length}</p>
+    <p class="" style="color: #959da5;">Items {start}-{end} of {zk_len}</p>
   </div>
 </main>
 
@@ -83,13 +94,17 @@
     overflow: auto;
   }
 
-  .cont {
-    border-bottom: 1px solid #333;
+  ._container {
+    border-bottom: 1px solid #959da5;
     min-height: 200px;
     height: calc(100vh - 13em);
     width: 92%;
     text-align: center;
     margin: auto;
+  }
+
+  .searchbar {
+    color: "#2a85cf";
   }
 
   main {
@@ -100,7 +115,8 @@
 
   input {
     width: 92%;
-    text-align: center;
+    text-align: start;
+    font-size: larger;
   }
 
   h1 {
@@ -117,5 +133,40 @@
     h1 {
       max-width: none;
     }
+  }
+
+  @media (max-width: 480px) {
+    h1 {
+      font-size: 2.1rem;
+      margin: 0.5rem auto;
+    }
+  }
+
+  ::-webkit-input-placeholder {
+    /* WebKit, Blink, Edge */
+    color: #959da5;
+  }
+  :-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    color: #959da5;
+    opacity: 1;
+  }
+  ::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color: #959da5;
+    opacity: 1;
+  }
+  :-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: #959da5;
+  }
+  ::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: #959da5;
+  }
+
+  ::placeholder {
+    /* Most modern browsers support this now. */
+    color: #959da5;
   }
 </style>
