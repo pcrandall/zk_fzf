@@ -79,7 +79,9 @@
 
   <div class="_container">
     <VirtualList bind:items={filteredList} bind:start bind:end let:item>
-      <ListItem {...item} />
+      <div class="card">
+        <ListItem {...item} />
+      </div>
     </VirtualList>
     <p class="" style="color: #959da5;">Items {start}-{end} of {zk_len}</p>
   </div>
@@ -168,5 +170,13 @@
   ::placeholder {
     /* Most modern browsers support this now. */
     color: #959da5;
+  }
+
+  .card {
+    transition: all 0.2s ease-in-out;
+  }
+  .card:hover {
+    transform: scale(0.99);
+    opacity: 0.75;
   }
 </style>
