@@ -64,19 +64,14 @@
 
 <main>
   <h1>Zettelkasten!</h1>
-  <div class="field">
-    <p class="control has-icons-left">
-      <input
-        class="input searchbar is-Medium is-primary is-hovered has-text-weight-normal"
-        bind:value={searchTerm}
-        bind:this={searchInput}
-        on:keydown={handleKeydown}
-        placeholder="Search notes here..."
-        type="text"
-      />
-    </p>
-  </div>
-
+  <input
+    class="input searchbar is-Medium is-primary is-hovered has-text-weight-normal"
+    bind:value={searchTerm}
+    bind:this={searchInput}
+    on:keydown={handleKeydown}
+    placeholder="Search"
+    type="text"
+  />
   <div class="_container">
     <VirtualList bind:items={filteredList} bind:start bind:end let:item>
       <div class="card">
