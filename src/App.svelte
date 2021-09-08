@@ -67,6 +67,27 @@
       entries.forEach((entry) => filteredList.push(entry.item));
     }
   };
+  const handleClick = (e) => {
+    console.log(e);
+  };
+
+  (function () {
+    document.querySelector("div").addEventListener("click", function (event) {
+      event.preventDefault();
+      var modal = document.querySelector(".modal"); // assuming you have only 1
+      var html = document.querySelector("html");
+      modal.classList.add("is-active");
+      html.classList.add("is-clipped");
+
+      modal
+        .querySelector(".modal-background")
+        .addEventListener("click", function (e) {
+          e.preventDefault();
+          modal.classList.remove("is-active");
+          html.classList.remove("is-clipped");
+        });
+    });
+  })();
 </script>
 
 <main>
@@ -81,17 +102,13 @@
   />
   <div class="_container">
     <VirtualList bind:items={filteredList} bind:start bind:end let:item>
-      <div class="card">
-        <ListItem
-          class="modal-button"
-          data-target="modal"
-          aria-haspopup="true"
-          {...item}
-        />
+      <div class="card" on:click={handleClick} id="listItemDiv">
+        <ListItem {...item} />
       </div>
     </VirtualList>
     <p>Items {start}-{end} of {zk_len}</p>
   </div>
+
   <div class="modal">
     <div class="modal-background" />
     <div class="modal-card">
