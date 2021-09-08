@@ -6,7 +6,6 @@
   import ListItem from "./lib/ListItem.svelte";
   import items from "./lib/data.js";
   import { onMount } from "svelte";
-  import "fa-icons";
 
   let searchTerm = "";
   let searchInput;
@@ -15,14 +14,14 @@
   onMount(() => searchInput.focus());
 
   $: filteredList = items.filter(
-    (item) => item.name.indexOf(searchTerm) !== -1
+    (item) => item.content.indexOf(searchTerm) !== -1
   );
 
   $: zk_len = filteredList.length; // subscribe to filteredList
 
-  console.log(items);
-
   /*
+    console.log(items);
+
     items here
 
     content: "ckrra qrh eteuqykbv ehtthdn rqa fdyvbru ropym qlf nurxqwudmtd amfvfes okdfhxfx oygmeuhgk bfbbeofhe ywxjm"
@@ -44,28 +43,36 @@
    * @param {{ key: string; target: { value: any; }; }} event
    */
 
-  function handleKeydown(event) {
+  const handleKeydown = (event) => {
+    /* const text = event.target.value; */
+    /* if (!text) return; */
+    /* const entries = fzf.find(text); */
+    /* filteredList = []; */
+    /* entries.forEach((entry) => filteredList.push(entry.item)); */
+
     if (event.key === "Enter") {
       const text = event.target.value;
       if (!text) return;
       searchTerm = text;
       const entries = fzf.find(searchTerm);
-      const ranking = entries
-        .map((entry) => {
-          entry.item;
-          /* console.log(entry.item); */
-        })
-        .join(", ");
-      console.log(entries);
-      console.log(filteredList);
+      /* const ranking = entries */
+      /*   .map((entry) => { */
+      /*     entry.item; */
+      /*     console.log(entry.item); */
+      /*   }) */
+      /*   .join(", "); */
+      /* console.log(entries); */
+      /* console.log(filteredList); */
+      filteredList = [];
+      entries.forEach((entry) => filteredList.push(entry.item));
     }
-  }
+  };
 </script>
 
 <main>
   <h1>Zettelkasten!</h1>
   <input
-    class="input searchbar is-Medium is-primary is-hovered has-text-weight-normal"
+    class="input is-Medium is-primary"
     bind:value={searchTerm}
     bind:this={searchInput}
     on:keydown={handleKeydown}
@@ -75,10 +82,31 @@
   <div class="_container">
     <VirtualList bind:items={filteredList} bind:start bind:end let:item>
       <div class="card">
-        <ListItem {...item} />
+        <ListItem
+          class="modal-button"
+          data-target="modal"
+          aria-haspopup="true"
+          {...item}
+        />
       </div>
     </VirtualList>
-    <p class="" style="color: #959da5;">Items {start}-{end} of {zk_len}</p>
+    <p>Items {start}-{end} of {zk_len}</p>
+  </div>
+  <div class="modal">
+    <div class="modal-background" />
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Modal title</p>
+        <button class="delete" aria-label="close" />
+      </header>
+      <section class="modal-card-body">
+        <!-- Content ... -->
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button is-success">Save changes</button>
+        <button class="button">Cancel</button>
+      </footer>
+    </div>
   </div>
 </main>
 
@@ -100,10 +128,6 @@
     margin: auto;
   }
 
-  .searchbar {
-    color: "#2a85cf";
-  }
-
   main {
     text-align: center;
     padding: 1em;
@@ -114,6 +138,10 @@
     width: 92%;
     text-align: start;
     font-size: larger;
+  }
+
+  p {
+    color: #959da5;
   }
 
   h1 {
@@ -168,10 +196,11 @@
   }
 
   .card {
-    transition: all 0.2s ease-in-out;
+    transition: all 0.1s ease-in-out;
   }
+
   .card:hover {
     transform: scale(0.99);
-    opacity: 0.75;
+    opacity: 0.8;
   }
 </style>
