@@ -1,6 +1,8 @@
 <script>
   export let name;
   export let content;
+  export let key;
+  export let formatted;
 </script>
 
 <div class="card">

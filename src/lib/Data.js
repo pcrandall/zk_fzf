@@ -1,5 +1,5 @@
 import getName from 'namey-mcnameface';
-import words from './words.json'
+import words from './Words.json'
 
 function rand(min, max) {
 	return min + ~~(Math.random() * (max - min));

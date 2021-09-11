@@ -2,72 +2,66 @@
   // @ts-nocheck
 
   import { Fzf } from "fzf";
+  import { onMount } from "svelte";
+  import Fuse from "fuse.js";
+
   import VirtualList from "./lib/VirtualList.svelte";
   import ListItem from "./lib/ListItem.svelte";
-  import items from "./lib/data.js";
-  import { onMount } from "svelte";
+  import items from "./lib/Data.js";
 
   let filteredList = items;
   let searchTerm = "";
   let searchInput;
+  let searchTimeout = 150;
   let start;
   let end;
   let timer;
 
-  onMount(() => searchInput.focus());
-
-  $: zk_len = filteredList.length; // subscribe to filteredList
-
-  const debounce = (val) => {
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      filteredList = getFzfList(val);
-    }, 180);
+  const options = {
+    includeScore: true,
+    keys: [
+      {
+        name: "content",
+        weight: 0.3,
+      },
+      {
+        name: "name",
+        weight: 0.4,
+      },
+    ],
   };
 
-  const getFzfList = (val) => {
-    /* if (val === undefined || val === "" || val === null) {
-      clearTimeout(timer);
-      return items;
-    } */
-    if (!val) return;
+  const fuse = new Fuse(items, options);
 
-    let entries = fzf.find(val);
+  onMount(() => searchInput.focus());
+
+  $: zk_len = filteredList === undefined ? 1000 : filteredList.length; // subscribe to filteredList
+
+  const debounceFuzzySearch = (val, t=searchTimeout) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      filteredList = fuzzySearch(val);
+    }, t);
+  };
+
+  const fuzzySearch = (val) => {
+    if (!val) return items;
+    let entries = fuse.search(val);
     let filtered = [];
     entries.map((entry) => filtered.push(entry.item));
     return filtered;
   };
 
-  /*
-    console.log(items);
-
-    ITEMS HERE
-    content: "ckrra qrh eteuqykbv ehtthdn rqa fdyvbru ropym qlf nurxqwudmtd amfvfes okdfhxfx oygmeuhgk bfbbeofhe ywxjm"
-    key: "_0"
-    name: "funny-goat"
-
-    console.trace(filteredList);
-  */
-
-  const fzf = new Fzf(items, {
-    // With selector you tell FZF where it can find
-    // the string that you want to query on
-    selector: (item) => item.content,
-    /* maxResultItems: 32, */
-  });
-
   /**
    * @param {{ key: string; target: { value: any; }; }} event
    */
-
 
   const handleKeydown = (e) => {
     if (e.key === "Enter") {
       clearTimeout(timer);
       let text = e.target.value;
       if (!text) return;
-      filteredList = getFzfList(text);
-      console.log(filteredList);
+      debounceFuzzySearch(text, 0)
     }
   };
 
@@ -80,17 +74,17 @@
   <h1>Zettelkasten!</h1>
   <input
     class="input is-Medium is-primary"
-    bind:value={searchTerm}
     bind:this={searchInput}
+    bind:value={searchTerm}
     on:keydown={handleKeydown}
-    on:keyup={(filteredList = ({ target: { value } }) => debounce(value))}
+    on:keyup={(filteredList = ({ target: { value } }) => debounceFuzzySearch(value))}
     placeholder="Search"
     type="text"
   />
   <div class="_container">
     <VirtualList bind:items={filteredList} bind:start bind:end let:item>
       <div class="card" on:click={handleClick} id="listItemDiv">
-        <ListItem {...item} />
+        <ListItem {...item} bind:formatted={filteredList} />
       </div>
     </VirtualList>
     <p>Items {start}-{end} of {zk_len}</p>
