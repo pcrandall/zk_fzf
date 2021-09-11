@@ -1,13 +1,13 @@
 <script>
   // @ts-nocheck
 
-  import { Fzf } from "fzf";
   import { onMount } from "svelte";
   import Fuse from "fuse.js";
 
   import VirtualList from "./lib/VirtualList.svelte";
   import ListItem from "./lib/ListItem.svelte";
   import items from "./lib/Data.js";
+
 
   let filteredList = items;
   let searchTerm = "";

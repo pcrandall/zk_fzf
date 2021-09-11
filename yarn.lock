@@ -32,10 +32,10 @@
     "require-relative" "^0.8.7"
     "svelte-hmr" "^0.14.7"
 
-"bulma@^0.9.3":
-  "integrity" "sha512-0d7GNW1PY4ud8TWxdNcP6Cc8Bu7MxcntD/RRLGWuiw/s0a9P+XlH/6QoOIrmbj6o8WWJzJYhytiu9nFjTszk1g=="
-  "resolved" "https://registry.npmjs.org/bulma/-/bulma-0.9.3.tgz"
-  "version" "0.9.3"
+"bulma@^0.7.1":
+  "integrity" "sha512-cX98TIn0I6sKba/DhW0FBjtaDpxTelU166pf7ICXpCCuplHWyu6C9LYZmL5PEsnePIeJaiorsTEzzNk3Tsm1hw=="
+  "resolved" "https://registry.npmjs.org/bulma/-/bulma-0.7.5.tgz"
+  "version" "0.7.5"
 
 "colorette@^1.2.2":
   "integrity" "sha512-MKGMzyfeuutC/ZJ1cba9NqcNpfeqMUcYmyF1ZFY6/Cn7CNSAKx6a+s48sqLqyAiZuaP2TcqMhoo+dlwFnVxT9w=="
@@ -67,6 +67,11 @@
     "@fortawesome/fontawesome-free" "^5.12.1"
     "lit-element" "^2.2.1"
 
+"font-awesome@^4.7.0":
+  "integrity" "sha1-j6jPBBGhoxr9B7BtKQK7n8gVoTM="
+  "resolved" "https://registry.npmjs.org/font-awesome/-/font-awesome-4.7.0.tgz"
+  "version" "4.7.0"
+
 "format-fuse.js@^1.0.2":
   "integrity" "sha512-KkWwIp8hEwM7SD5sxhI8sGAKzEnzxN3e45ffhu2Z2MII8hQ9GjmbFisSuvYvZgYN38qQSvLC6arf/AL4WgLXuQ=="
   "resolved" "https://registry.npmjs.org/format-fuse.js/-/format-fuse.js-1.0.2.tgz"
@@ -84,11 +89,6 @@
   "integrity" "sha512-hT9yh/tiinkmirKrlv4KWOjztdoZo1mx9Qh4KvWqC7isoXwdUY3PNWUxceF4/qO9R6riA2C29jdTOeQOIROjgw=="
   "resolved" "https://registry.npmjs.org/fuse.js/-/fuse.js-3.6.1.tgz"
   "version" "3.6.1"
-
-"fzf@^0.3.2":
-  "integrity" "sha512-5kCgLKvGGkjja/oT5Fi1nMIqHZTkclPOc+9xxBFnGC+jJ0ikbdxl7f6W1/pprTgHjh7XGTPyOp9JOuyOKwRfPg=="
-  "resolved" "https://registry.npmjs.org/fzf/-/fzf-0.3.2.tgz"
-  "version" "0.3.2"
 
 "has@^1.0.3":
   "integrity" "sha512-f2dvO0VU6Oej7RkWJGrehjbzMAjFp5/VKPp5tTpWIV4JHHZK1/BxbFRtf/siA2SWTe09caDmVtYYzWEIbBS4zw=="
@@ -225,6 +225,11 @@
   "integrity" "sha512-GDpPHZTkWMZcYesCF5MoUR38mQa6n0oo6V8ZBoIeU5pCJevbxmHISFRWy1qheVPZhNm3syOG2m0Hn9QMuIugHg=="
   "resolved" "https://registry.npmjs.org/strind/-/strind-0.3.1.tgz"
   "version" "0.3.1"
+
+"svelte-bulma-components@^0.1.5":
+  "integrity" "sha512-9ObBDqTZ2pnDILCktXMH4UliCKYMQIr7Aa2qZTfjCPgzrE1qRsZbNAuPC3sHCZ/g2psFCq7pk8f47z1VkMKgYg=="
+  "resolved" "https://registry.npmjs.org/svelte-bulma-components/-/svelte-bulma-components-0.1.5.tgz"
+  "version" "0.1.5"
 
 "svelte-fuzzy@^2.1.0":
   "integrity" "sha512-PQjaXU0D1refdUiPtFnEujuduUS5txddnJHM/l/YU7ZFBvf+T/Kub4oSLl94zL8VTgt0oIx+t4vCCmR2QMg67A=="

@@ -1,5 +1,5 @@
 {
-  "name": "vitefzf",
+  "name": "fuzzy_zk",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -15,11 +15,11 @@
   },
   "dependencies": {
     "@sveltejs/svelte-virtual-list": "^3.0.1",
-    "bulma": "^0.9.3",
+    "bulma": "^0.7.1",
     "fa-icons": "^0.2.0",
     "fuse.js": "^3.6.1",
-    "fzf": "^0.3.2",
     "namey-mcnameface": "^1.0.3",
-    "prettier-plugin-svelte": "^2.4.0"
+    "prettier-plugin-svelte": "^2.4.0",
+    "svelte-bulma-components": "^0.1.5"
   }
 }
