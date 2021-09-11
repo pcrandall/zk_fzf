@@ -7,86 +7,73 @@
   import items from "./lib/data.js";
   import { onMount } from "svelte";
 
+  let filteredList = items;
   let searchTerm = "";
   let searchInput;
   let start;
   let end;
+  let timer;
+
   onMount(() => searchInput.focus());
 
-  $: filteredList = items.filter(
-    (item) => item.content.indexOf(searchTerm) !== -1
-  );
-
   $: zk_len = filteredList.length; // subscribe to filteredList
+
+  const debounce = (val) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      filteredList = getFzfList(val);
+    }, 180);
+  };
+
+  const getFzfList = (val) => {
+    /* if (val === undefined || val === "" || val === null) {
+      clearTimeout(timer);
+      return items;
+    } */
+    if (!val) return;
+
+    let entries = fzf.find(val);
+    let filtered = [];
+    entries.map((entry) => filtered.push(entry.item));
+    return filtered;
+  };
 
   /*
     console.log(items);
 
-    items here
-
+    ITEMS HERE
     content: "ckrra qrh eteuqykbv ehtthdn rqa fdyvbru ropym qlf nurxqwudmtd amfvfes okdfhxfx oygmeuhgk bfbbeofhe ywxjm"
     key: "_0"
     name: "funny-goat"
 
     console.trace(filteredList);
-
   */
 
   const fzf = new Fzf(items, {
     // With selector you tell FZF where it can find
     // the string that you want to query on
     selector: (item) => item.content,
-    maxResultItems: 32,
+    /* maxResultItems: 32, */
   });
 
   /**
    * @param {{ key: string; target: { value: any; }; }} event
    */
 
-  const handleKeydown = (event) => {
-    /* const text = event.target.value; */
-    /* if (!text) return; */
-    /* const entries = fzf.find(text); */
-    /* filteredList = []; */
-    /* entries.forEach((entry) => filteredList.push(entry.item)); */
 
-    if (event.key === "Enter") {
-      const text = event.target.value;
+  const handleKeydown = (e) => {
+    if (e.key === "Enter") {
+      clearTimeout(timer);
+      let text = e.target.value;
       if (!text) return;
-      searchTerm = text;
-      const entries = fzf.find(searchTerm);
-      /* const ranking = entries */
-      /*   .map((entry) => { */
-      /*     entry.item; */
-      /*     console.log(entry.item); */
-      /*   }) */
-      /*   .join(", "); */
-      /* console.log(entries); */
-      /* console.log(filteredList); */
-      filteredList = [];
-      entries.forEach((entry) => filteredList.push(entry.item));
+      filteredList = getFzfList(text);
+      console.log(filteredList);
     }
   };
+
   const handleClick = (e) => {
     console.log(e);
   };
-
-  onMount(() => {
-    /* (function () { */
-    document.querySelector("div").addEventListener("click", function (event) {
-      event.preventDefault();
-      var modal = document.querySelector(".modal"); // assuming you have only 1
-      var html = document.querySelector("html");
-      modal.classList.add("is-active");
-      html.classList.add("is-clipped");
-
-      modal.querySelector(".delete").addEventListener("click", function (e) {
-        console.log(e);
-        e.preventDefault();
-      });
-    });
-  });
-  /* })(); */
 </script>
 
 <main>
@@ -96,6 +83,7 @@
     bind:value={searchTerm}
     bind:this={searchInput}
     on:keydown={handleKeydown}
+    on:keyup={(filteredList = ({ target: { value } }) => debounce(value))}
     placeholder="Search"
     type="text"
   />
@@ -106,23 +94,6 @@
       </div>
     </VirtualList>
     <p>Items {start}-{end} of {zk_len}</p>
-  </div>
-
-  <div class="modal">
-    <div class="modal-background" />
-    <div class="modal-card">
-      <header class="modal-card-head">
-        <p class="modal-card-title">Modal title</p>
-        <button class="delete" aria-label="close" />
-      </header>
-      <section class="modal-card-body">
-        <!-- Content ... -->
-      </section>
-      <footer class="modal-card-foot">
-        <button class="button is-success">Save changes</button>
-        <button class="button">Cancel</button>
-      </footer>
-    </div>
   </div>
 </main>
 
